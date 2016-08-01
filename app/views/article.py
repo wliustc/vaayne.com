@@ -16,5 +16,5 @@ def article(post_id):
         abort(404)
     else:
         log.info('Success find article, %s.'.encode('utf-8') % item.get('title'))
-        return render_template('article.html', item=item, post_time=datetime.fromtimestamp(int(item.get('post_time'))))
+        return render_template('article.html', item=item)
 
