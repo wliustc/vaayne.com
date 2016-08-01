@@ -1,13 +1,11 @@
-## MongoDB
-1. database : blog
-2. collection: posts, users
-3. posts:
-    `db.posts.ensureIndex({"source_url":1,"slug":-1}, {unique: true}})`
+## 关于
+Vaayne.com站点,主要给自己阅读提供方便
 
-## Redis
-```
-$ wget http://download.redis.io/releases/redis-3.2.2.tar.gz
-$ tar xzf redis-3.2.2.tar.gz
-$ cd redis-3.2.2
-$ make
-```
+## 版本更新
+
+####  Version 1.0 @2016.8.1
+
+主要功能:
+    - 微信公众号订阅API
+    - 飞客茶馆、什么值得买及微信公众号的抓取
+    - 首页显示新闻流
