@@ -8,7 +8,8 @@ class Config:
     SECRET_KEY = 'SECRET_KEY'
     MONGODB_HOST = 'localhost'
     MONGODB_PORT = 27017
-
+    RECAPTCHA_PUBLIC_KEY = '6LeYIbsSAAAAACRPIllxA7wvXjIE411PfdB2gt2J'
+    RECAPTCHA_PRIVATE_KEY = '6LeYIbsSAAAAAJezaIq3Ft_hSTo0YtyeFG-JgRtu'
     @staticmethod
     def init_app(app):
         pass

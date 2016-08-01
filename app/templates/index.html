@@ -18,7 +18,7 @@
 
                 <h1 class="page-header">
                     最新文章
-                    <small>后面会有更多</small>
+                    <small></small>
                 </h1>
             {% for item in items %}
                 <!-- Blog Post -->
@@ -26,15 +26,19 @@
                     <a href={{ url_for('view.article', post_id=item.post_id, _external=True) }}>{{ item.title }}</a>
                 </h2>
                 <p class="lead">
-                    by <a href={{ item.source_url }}>{{ item.author }}</a>
+                    by <a href={{ item.source_url }}>{{ item.source_name }}</a>
                 </p>
-                <p><span class="post_time"></span> {{ item.post_time }}</p>
+                <div class=author>
+                <span><a href={{ item.source_url }} target='_blank'>原文阅读</a> </span>
+                <span class="post_time"></span> {{ moment(item.post_time, local=true).format('YYYY-MM-DD h:mm:ss') }}</div>
                 <hr>
-                <img class="img-responsive" src={{ url_for('view.get_img', url=item.image) }} alt="">
+                {% if item.image != '' %}
+                <img class="img-responsive" src={{ url_for('view.get_img', url=item.image) }} width="100" height="100" alt="文章大图" align="left">
                 <hr>
+                {% endif %}
+                
                 {{ item.summary }}
                 <a class="btn btn-primary" href={{ url_for('view.article', post_id=item.post_id, _external=True) }}>Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-
                 <hr>
                 {% endfor %}
 
@@ -142,6 +146,10 @@
 
 {% endblock %}
 
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}
 
 
 

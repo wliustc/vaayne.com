@@ -41,8 +41,11 @@ class FlyerTea(Spider):
             content = self.get_img(BeautifulSoup(content, 'lxml'), 'src').encode('utf-8')
             aid = aid
             image = data.get('face')
-            self.add_result(title=title, author=author, post_time=post_time, source_name=self.spider_name,
-                            source_url=source_url, summary=summary,
+            # self.add_result(title=title, author=author, post_time=post_time, source_name=self.spider_name,
+            #                 source_url=source_url, summary=summary,
+            #                 content=content, image=image, category=self.category, aid=aid)
+            self.add_result(title=title, author=author, post_time=post_time, source_name=u'飞客茶馆',
+                            source_url=source_url, summary=summary, spider_name=self.spider_name,
                             content=content, image=image, category=self.category, aid=aid)
         except Exception as e:
             self.log.error(e)

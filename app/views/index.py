@@ -3,14 +3,20 @@
 
 
 from . import view
-from flask import render_template
+from flask import render_template, request
 from .. import db
 from pymongo import DESCENDING
+from ..func import update_articles
 
 
 @view.route('/')
 def index():
+    page = request.args.get('page', 1, type=int)
+    update_articles.update()
     items = db.posts.find().sort('post_time', DESCENDING).limit(10)
+    # for item in items:
+    #     print item.get('post_time'), type(item['post_time'])
+
     return render_template('index.html', items=items)
 
 

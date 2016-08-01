@@ -11,4 +11,5 @@ view = Blueprint('view', __name__,
 from .. import init_log
 log = init_log('view')
 
-from . import index, error, test, get_img, article
+from . import index, error, test, get_img, article, login
+

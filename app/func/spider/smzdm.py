@@ -41,8 +41,11 @@ class Smzdm(Spider):
             content = data.get('article_filter_content').encode('utf-8')
             content = self.get_img(BeautifulSoup(content, 'lxml'), 'src').encode('utf-8')
             image = data.get('article_pic')
-            self.add_result(title=title, author=author, post_time=post_time, source_name=self.spider_name,
-                            source_url=source_url, summary=summary,
+            # self.add_result(title=title, author=author, post_time=post_time, source_name=self.spider_name,
+            #                 source_url=source_url, summary=summary,
+            #                 content=content, image=image, category=self.category, aid=kind)
+            self.add_result(title=title, author=author, post_time=post_time, source_name=u'什么值得买',
+                            source_url=source_url, summary=summary, spider_name=self.spider_name,
                             content=content, image=image, category=self.category, aid=kind)
         except Exception as e:
             self.log.error(e)
