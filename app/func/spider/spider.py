@@ -10,6 +10,7 @@ import hashlib
 from redis import StrictRedis
 from random import choice
 from pymongo import MongoClient, DESCENDING
+from datetime import datetime
 
 
 class Spider(object):
@@ -71,7 +72,7 @@ class Spider(object):
             # new_tag['src'] = url_for('view.get_img', url=img['data-src'])
             # new_tag['src'] = "http://vaayne.com/img02?url=%s" % img[real]
             # img.replace_with(new_tag)
-            img['src'] = "http://vaayne.com/img02?url=%s" % img[real]
+            img['src'] = "https://vaayne.com/img02?url=%s" % img[real]
         try:
             selects = soup.find_all('select')
             for sel in selects:
@@ -93,7 +94,7 @@ class Spider(object):
             post_id=int(post_id),
             aid=aid,
             title=title,
-            post_time=int(post_time),
+            post_time=datetime.fromtimestamp(int(post_time)),
             author=author,
             source_name=source_name,
             spider_name=spider_name,

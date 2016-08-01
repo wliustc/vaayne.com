@@ -75,7 +75,7 @@ class WX(Spider):
                 if self.repeat_check(source_url):
                     continue
                 title = info.get('title')
-                aid = info.get('account')
+                wx_id = info.get('account')
                 author = info.get('author')
                 post_time = info.get('publicTime')
                 post_time = Arrow.strptime(post_time, '%Y-%m-%d %H:%M:%S', tzinfo='Asia/Shanghai').timestamp
@@ -89,9 +89,9 @@ class WX(Spider):
                 # print summary
                 # print source_url
                 # print content
-                self.add_result(title=title, author=author, post_time=post_time, source_name=self.spider_name,
-                                source_url=source_url, summary=summary,
-                                content=content, image=image, category=self.category, aid=aid)
+                self.add_result(title=title, author=author, post_time=post_time, source_name=author,
+                                source_url=source_url, summary=summary, spider_name=self.spider_name,
+                                content=content, image=image, category=self.category, aid=wx_id)
         except Exception as e:
             self.log.error(e)
         # return dict(

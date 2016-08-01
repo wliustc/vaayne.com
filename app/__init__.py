@@ -8,12 +8,16 @@ from flask_mail import Mail
 from flask_moment import Moment
 import logging
 from config.config import config
+from flask_login import LoginManager
+from flask_wtf.csrf import CsrfProtect
 
 
 bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = MongoClient().blog
+lm = LoginManager()
+csrf = CsrfProtect()
 
 
 def init_log(log_name):
@@ -34,6 +38,9 @@ def create_app(config_name):
     bootstrap.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
+    lm.init_app(app)
+    lm.login_view = 'login'
+    csrf.init_app(app)
     # db.init_app(app)
 
     from .views import view
