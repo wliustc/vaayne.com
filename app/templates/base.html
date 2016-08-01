@@ -1,0 +1,113 @@
+{% extends "bootstrap/base.html" %}
+<!--head -->
+
+    {%- block head %}
+    {{ super() }}
+{#    {% block title %}Vaayne's Blog{% endblock title %}#}
+
+
+    {%- block metas %}
+        {{ super() }}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    {%- endblock metas %}
+
+
+    {%- block styles %}
+    <!-- Bootstrap Core CSS -->
+        {{ super() }}
+        <link rel="stylesheet" href={{ url_for('static',filename='css/bootstrap.css') }}>
+    {%- endblock styles %}
+
+    {%- endblock head %}
+
+
+
+<!-- body -->
+
+  <body{% block body_attribs %}{% endblock body_attribs %}>
+    {% block body -%}
+
+    {% block navbar %}
+        <!-- Navigation -->
+        <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href={{ url_for('view.index') }}>Vaayne's Blog</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">待定<span class="sr-only">(current)</span></a></li>
+        <li><a href="api">API</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">分类 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">微信公众号</a></li>
+            <li><a href="#">飞客茶馆</a></li>
+            <li><a href="#">什么值得买</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">更多</a></li>
+<!--             <li role="separator" class="divider"></li>
+            <li><a href="#">One more separated link</a></li> -->
+          </ul>
+        </li>
+      </ul>
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">搜索</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="register">注册</a></li>
+        <li><a href="login">登陆</a></li>
+        <li><a href="about">关于</a></li>
+        <!-- <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li> -->
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+    {%- endblock navbar %}
+
+
+    {% block content -%}
+        {% block content_title %}{% endblock %}
+        {% block page_content %}{% endblock %}
+    {%- endblock content %}
+
+
+    {% block scripts %}
+        <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+        <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+    {%- endblock scripts %}
+
+
+    {% block footer %}
+        <div class="mastfoot">
+            <div class="col-lg-12">
+                <a href='http://www.vaayne.com/'>Copyright &copy; Vaayne's Blog 2016</a>
+            </div>
+        </div>
+    {% endblock %}
+
+    {%- endblock body %}
+  </body>
