@@ -25,7 +25,7 @@ def parse(datas):
                 title=data.get('title'),
                 link=data.get('source_url'),
                 description=data.get('content'),
-                pubDate=datetime.datetime.fromtimestamp(int(data.get('post_time'))),
+                pubDate=data.get('post_time'),
                 # categories=data.get('category'),
                 # author=data.get('author')
                 # image=data.get('image')
