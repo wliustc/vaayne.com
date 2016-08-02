@@ -17,4 +17,4 @@ def insert_sql():
 @api.route('/smzdm')
 def smzdm_api():
     insert_sql()
-    return create_response('source_name', ['smzdm'])
+    return create_response('spider_name', ['smzdm'])

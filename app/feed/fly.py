@@ -13,5 +13,5 @@ def fly_rss():
     if page is None:
         page = 1
     fly.insert_sql(page)
-    rss = gen_rss('source_name', 'flyertea')
+    rss = gen_rss('spider_name', 'flyertea')
     return create_response(rss)

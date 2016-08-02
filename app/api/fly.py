@@ -20,4 +20,4 @@ def fly_api():
     if page is None:
         page = 10
     insert_sql(page)
-    return create_response('source_name', ['flyertea'])
+    return create_response('spider_name', ['flyertea'])
