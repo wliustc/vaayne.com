@@ -4,8 +4,8 @@
 from . import view
 from flask import request, redirect, render_template, url_for, flash
 from flask_login import login_user
-from ..forms.form import EmailPasswordForm
-from ..forms.user import User
+from .forms.form import EmailPasswordForm
+from .forms.user import User
 from .. import db
 from .. import lm
 

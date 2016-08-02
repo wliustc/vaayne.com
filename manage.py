@@ -1,7 +1,8 @@
 #!/usr/local/bin/python
 # -*- coding:utf-8 -*-
 # Created by Vaayne at 2016/07/27 11:18 
-
+from gevent.monkey import patch_all
+patch_all()
 from app import create_app
 app = create_app('production')
 from app import db

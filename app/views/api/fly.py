@@ -3,7 +3,7 @@
 
 from flask import request
 from . import api, create_response, log
-from ..func.spider import FlyerTea
+from ...func.spider import FlyerTea
 
 
 fly = FlyerTea()

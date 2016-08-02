@@ -3,7 +3,7 @@
 
 from flask import Blueprint, Response
 from pymongo import DESCENDING
-from .. import db, init_log
+from ... import db, init_log
 import PyRSS2Gen
 import datetime
 import xml.etree.cElementTree as ET

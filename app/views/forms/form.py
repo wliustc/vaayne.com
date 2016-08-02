@@ -4,7 +4,7 @@ from flask_wtf import Form, RecaptchaField
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired, Email
 from validators import Unique
-from .. import db
+from ... import db
 
 
 class EmailPasswordForm(Form):

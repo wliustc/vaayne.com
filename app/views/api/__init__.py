@@ -4,7 +4,7 @@
 from flask import Blueprint, Response
 import json
 from pymongo import DESCENDING
-from .. import db, init_log
+from ... import db, init_log
 
 
 api = Blueprint('api', __name__)

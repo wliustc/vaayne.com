@@ -4,8 +4,8 @@ from gevent.monkey import patch_all
 from gevent.pool import Pool
 from flask import request, abort
 from . import api, create_response, log
-from ..func.spider import WX
-from ..func.spider import FlyerTea
+from ...func.spider import WX
+from ...func.spider import FlyerTea
 
 patch_all()
 wx = WX()
