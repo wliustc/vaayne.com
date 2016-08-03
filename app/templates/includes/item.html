@@ -1,0 +1,19 @@
+<h2>
+    <a href={{ url_for('view.article', post_id=item.post_id, _external=True) }}>{{ item.title }}</a>
+</h2>
+
+<p class="base-info">
+     by <a href={{ item.source_url }}>{{ item.source_name }}</a>&nbsp;&nbsp;
+    发布于 <span class="post_time"><b>{{ moment(timestamp=item.post_time, local=true).format('YYYY-MM-DD HH:mm:ss') }}</b></span>
+<hr>
+
+{% if item.image != '' %}
+    <img class="img-responsive" src={{ url_for('view.get_img', url=item.image) }}
+            width=400 height=200 alt="文章大图" align="center">
+    <hr>
+{% endif %}
+
+<p>{{ item.summary }}</p>
+
+<a class="btn btn-primary" href={{ url_for('view.article', post_id=item.post_id, _external=True) }}>Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+<hr>
