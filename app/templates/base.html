@@ -20,6 +20,7 @@
     <!-- Bootstrap Core CSS -->
         {{ super() }}
         <link rel="stylesheet" href={{ url_for('static',filename='css/bootstrap.css') }}>
+{#        <link rel="stylesheet" href={{ url_for('static',filename='css/blog.css') }}>#}
     {%- endblock styles %}
 
     {%- endblock head %}
@@ -38,8 +39,8 @@
 
 
     {% block content -%}
-        {% block content_title %}{% endblock %}
-        {% block page_content %}{% endblock %}
+            {% block content_title %}{% endblock %}
+            {% block page_content %}{% endblock %}
     {%- endblock content %}
 
 
@@ -51,8 +52,8 @@
 
 
     {% block footer %}
-        <div class="mastfoot">
-            <div class="col-lg-12">
+        <div class="mastfoot" style="background-color:#FFA500;clear:both;text-align:center;">
+            <div class="col-lg-12" >
                 <p>当前时间{{ moment().format('YYYY-MM-DD h:mm:ss') }}</p>
                 <a href='http://www.vaayne.com/'>Copyright &copy; Vaayne's Blog 2016</a>
             </div>
