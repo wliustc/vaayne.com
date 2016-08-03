@@ -17,20 +17,16 @@
                 <h1>{{ item.title }}</h1>
 
                 <!-- Author -->
-                <p class="author">
-                    by <a href="#">{{ item.source_name }}</a>
+                <p class="base-info">
+                    by <a href={{ item.source_url }}>{{ item.source_name }}</a>&nbsp;&nbsp;
+                    发布于 <span class="post_time"><b>{{ moment(timestamp=item.post_time, local=true).format('YYYY-MM-DD HH:mm:ss') }}</b></span>
                 </p>
 
                 <hr>
-                <p>
-                    <span><a href={{ item.source_url }} target='_blank'>原文阅读</a></span>
-                    <span class="glyphicon glyphicon-time">{{ moment(timestamp=item.post_time, local=true).format('YYYY-MM-DD HH:mm:ss') }}</span>
-                </p>
-                <!-- Date/Time -->
-                <hr>
                 <!-- Preview Image -->
                 {% if item.image %}
-                <img class="img-responsive" src={{ url_for('view.get_img', url=item.image) }} alt="文章配图">
+                <img class="img-responsive" src={{ url_for('view.get_img', url=item.image) }}
+                        width="600" height="300" alt="文章大图" align="center">
                 <hr>
                 {% else %}
                 {% endif %}
@@ -99,60 +95,6 @@
 
             </div>
 
-            <!-- Blog Sidebar Widgets Column -->
-            <div class="col-md-4">
-
-                <!-- Blog Search Well -->
-                <div class="well">
-                    <h4>Blog Search</h4>
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                        </span>
-                    </div>
-                    <!-- /.input-group -->
-                </div>
-
-                <!-- Blog Categories Well -->
-                <div class="well">
-                    <h4>Blog Categories</h4>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled">
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                                <li><a href="#">Category Name</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </div>
-
-                <!-- Side Widget Well -->
-                <div class="well">
-                    <h4>Side Widget Well</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
-                </div>
 
             </div>
 
