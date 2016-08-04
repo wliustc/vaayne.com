@@ -15,8 +15,8 @@ ct = re.compile(r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}')
 
 
 class WxWGC(WX):
-    def __init__(self):
-        self.aid = ''
+    def __init__(self, aid):
+        self.aid = aid
         self.author = ''
 
     def search_id(self, wid):
@@ -69,9 +69,9 @@ class WxWGC(WX):
                         source_url=source_url, summary=summary, spider_name=self.spider_name,
                         content=content, image=image, category=self.category, aid=self.aid)
 
-    def run(self, aid):
+    def run(self):
         try:
-            url = self.search_id(aid)
+            url = self.search_id(self.aid)
             if not url:
                 return
             self.get_articles(url)

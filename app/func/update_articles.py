@@ -23,7 +23,7 @@ def update_wx():
 def update():
     gevent.joinall([
         gevent.spawn(update_wx()),
-        gevent.spawn(smzdm.insert_sql()),
-        gevent.spawn(fly.insert_sql(1))
+        # gevent.spawn(smzdm.insert_sql()),
+        # gevent.spawn(fly.insert_sql(1))
     ])
 
