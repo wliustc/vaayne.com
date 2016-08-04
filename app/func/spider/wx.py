@@ -15,10 +15,9 @@ u = re.compile(r'"uuid":"(\w+)"')
 
 
 class WX(Spider):
-    def __init__(self):
-        self.log = Spider().init_log(__name__)
-        self.spider_name = 'wx'
-        self.category = u'微信公众号'
+    log = Spider().init_log(__name__)
+    spider_name = 'wx'
+    category = u'微信公众号'
 
     @staticmethod
     def get_nonce():
@@ -38,6 +37,11 @@ class WX(Spider):
             return
         uid = u.search(r.text).group(1)
         return uid
+
+    @staticmethod
+    def parse_url(url):
+        p = re.compile('&scene=.*')
+        return p.sub('', url, count=1)
 
     # def get_content(self, url):
     #     r = requests.get(url)
@@ -71,7 +75,7 @@ class WX(Spider):
         try:
             infos = datas['value']['lastestArticle']
             for info in infos:
-                source_url = info.get('url')
+                source_url = self.parse_url(info.get('url'))
                 if self.repeat_check(source_url):
                     continue
                 title = info.get('title')

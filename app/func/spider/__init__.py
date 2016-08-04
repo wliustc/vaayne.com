@@ -6,3 +6,4 @@ from spider import Spider
 from wx import WX
 from fly import FlyerTea
 from smzdm import Smzdm
+from wx_iwgc import WxWGC

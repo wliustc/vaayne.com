@@ -4,20 +4,21 @@ from gevent.monkey import patch_all
 from gevent.pool import Pool
 from flask import request, abort
 from . import api, create_response, log
-from ...func.spider import WX
-from ...func.spider import FlyerTea
+from ...func.spider import WX, WxWGC
+
 
 patch_all()
 wx = WX()
-fly = FlyerTea()
+wgc = WxWGC()
 p = Pool(16)
 
 
 def insert_sql(symbols):
-    log.info('Start update Flyertea articles')
+    log.info('Start update WX articles')
     for symbol in symbols:
         try:
-            wx.run(symbol)
+            if not wgc.run(symbol):
+                wx.run(symbol)
         except Exception as e:
             print e
             continue
@@ -32,7 +33,5 @@ def wx_api():
     symbols = symbols.replace(' ', '').split(',')
     print symbols
     insert_sql(symbols)
-    # if res is None:
-    #     abort(404)
     return create_response('aid', symbols)
 

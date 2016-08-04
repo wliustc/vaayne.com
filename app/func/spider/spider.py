@@ -2,6 +2,7 @@
 # Created by Vaayne at 2016/07/18 21:47 
 
 import requests
+from requests.auth import HTTPProxyAuth
 from pyquery import PyQuery
 import logging
 from user_agent import generate_user_agent
@@ -17,10 +18,9 @@ class Spider(object):
     rds = StrictRedis(host='localhost', port=6379, db=1)
     pq = PyQuery
     db = MongoClient().blog
+    proxy_api = 'http://ent.kuaidaili.com/api/getproxy?orderid=936588863967175&num=100&kps=1&format=json'
+    proxy_list = requests.get(proxy_api).json()['data']['proxy_list']
 
-    # proxy_api = 'http://ent.kuaidaili.com/api/getproxy?orderid=936588863967175&num=100&kps=1&format=json'
-    # data = requests.get(proxy_api).json()
-    # self.proxy_list = data['data']['proxy_list']
 
     @staticmethod
     def init_log(log_name):
@@ -34,9 +34,11 @@ class Spider(object):
 
     def req(self, url, **kwargs):
         header = {'User-Agent': generate_user_agent()}
-        # proxy = {'http': choice(self.proxy_list)}
-        # r = requests.get(url, headers=header, proxies=proxy)
-        r = requests.get(url, headers=header, **kwargs)
+        proxy = {
+            'http': choice(self.proxy_list),
+            'https': choice(self.proxy_list)
+        }
+        r = requests.get(url, headers=header, proxies=proxy, auth=HTTPProxyAuth('reg', 'noxqofb0'), **kwargs)
         try:
             charset = re.search(re.compile(r'charset=(.*)'), r.headers.get('Content-Type')).group(1)
         except Exception as e:
