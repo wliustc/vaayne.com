@@ -12,11 +12,8 @@ from ..func import update_articles
 @view.route('/')
 def index():
     page = request.args.get('page', 1, type=int)
-    items = db.posts.find({'spider_name': 'wx'}).sort('post_time', DESCENDING).limit(10)
-    # for item in items:
-    #     print item.get('post_time'), type(item['post_time'])
-
-    return render_template('index.html', items=items)
+    items = db.posts.find({'spider_name': 'wx'}).skip(10 * (page - 1)).sort('post_time', DESCENDING).limit(10)
+    return render_template('index.html', items=items, page=page)
 
 
 @view.route('/update')

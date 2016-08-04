@@ -26,21 +26,37 @@
                 {% endfor %}
 
 <nav>
+
   <ul class="pagination pagination-lg">
     <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
+        {% if page  > 5 %}
+                 <a href={{ url_for('view.index', page=page-5) }} aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+        {% else %}
+                <a class="previous disabled" href={{ url_for('view.index', page=page-5) }} aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+        {% endif %}
+
     </li>
-  <!--   <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li> -->
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
+      {% if page  < 5 %}
+         {% for i in range(1, 6) %}
+          {% if i == page  %}
+                <li class="active"><a href={{ url_for('view.index', page=i) }}> {{ i }} </a></li>
+            {%  else %}
+                <li><a href={{ url_for('view.index', page=i) }}>{{ i }}</a></li>
+            {% endif %}
+         {% endfor %}
+      {% else %}
+          {% for i in range(page-2, page+3) %}
+            {% if i == page  %}
+                <li class="active"><a href={{ url_for('view.index', page=i) }}> {{ i }} </a></li>
+            {%  else %}
+                <li><a href={{ url_for('view.index', page=i) }}>{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+      {% endif %}
+
+
     <li>
-      <a href="#" aria-label="Next">
+      <a href={{ url_for('view.index', page=page+5) }} aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

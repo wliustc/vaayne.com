@@ -42,7 +42,6 @@ def create_app(config_name):
     lm.init_app(app)
     lm.login_view = 'login'
     csrf.init_app(app)
-    # db.init_app(app)
 
     from .views import view
     app.register_blueprint(view)
