@@ -38,7 +38,10 @@ class Spider(object):
             'http': choice(self.proxy_list),
             'https': choice(self.proxy_list)
         }
-        r = requests.get(url, headers=header, proxies=proxy, auth=HTTPProxyAuth('reg', 'noxqofb0'), **kwargs)
+        try:
+            r = requests.get(url, headers=header, proxies=proxy, auth=HTTPProxyAuth('reg', 'noxqofb0'), **kwargs)
+        except:
+            r = requests.get(url, headers=header, **kwargs)
         try:
             charset = re.search(re.compile(r'charset=(.*)'), r.headers.get('Content-Type')).group(1)
         except Exception as e:
