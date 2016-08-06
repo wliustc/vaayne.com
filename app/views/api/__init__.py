@@ -18,6 +18,9 @@ def get_data_from_sql(key, value):
     for item in items:
         item.pop('content')
         item.pop('_id')
+        item.pop('spider_name')
+        item.pop('slug')
+        
         item['post_time'] = item.get('post_time').strftime('%Y-%m-%d %H:%M:%S')
         datas.append(item)
     return datas
@@ -34,7 +37,7 @@ def create_response(key, values):
         response=formater,
         mimetype="application/json",
         status=200,
-        content_type='text/html;charset=utf-8',
+        content_type='text/json;charset=utf-8',
     )
 
 from . import view
