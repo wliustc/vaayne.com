@@ -64,7 +64,7 @@ def parse(datas):
 #
 def gen_rss(key, value):
     log.info('Gen RSS for %s: %s' % (key, value))
-    item = db.posts.find_one({key: value})
+    item = db.posts.find_one({key: {'$regex': value, '$options': 'i'}})
     try:
         if item.get('source_name') == 'wx':
             title = item.get('author')
@@ -73,7 +73,7 @@ def gen_rss(key, value):
     except Exception as e:
         log.error(e)
         return
-    datas = db.posts.find({key: value}).sort('post_time', DESCENDING)
+    datas = db.posts.find({key: {'$regex': value, '$options': 'i'}}).sort('post_time', DESCENDING)
     items = parse(datas)
     rss = PyRSS2Gen.RSS2(
         title=title,
@@ -87,8 +87,8 @@ def gen_rss(key, value):
 
 def gen_xml(key, value):
     try:
-        item = db.posts.find_one({key: value})
-        items = db.posts.find({key: value}).sort('post_time', DESCENDING)
+        item = db.posts.find_one({key: {'$regex': value, '$options': 'i'}})
+        items = db.posts.find({key: {'$regex': value, '$options': 'i'}}).sort('post_time', DESCENDING)
         return get_xml(item, items)
     except Exception as e:
         log.exception(e)

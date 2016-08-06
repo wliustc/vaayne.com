@@ -14,7 +14,7 @@ log = init_log(__name__)
 def get_data_from_sql(key, value):
     log.info('Get %s:%s date from sql' % (key, value))
     datas = []
-    items = db.posts.find({key: value}).sort('post_time', DESCENDING).limit(10)
+    items = db.posts.find({key: {'$regex': value, '$options': 'i'}}).sort('post_time', DESCENDING).limit(10)
     for item in items:
         item.pop('content')
         item.pop('_id')
