@@ -10,7 +10,7 @@ Vaayne.com站点,主要给自己阅读提供方便
 ### 网站链接
 1. 主页: <https://vaayne.com>， 暂时显示所有微信公众号的内容，按文章发布时间排序
 2. 分类: <https://vaayne.com/category/smzdm>，   <https://vaayne.com/category/flyertea>， 分别显示来自什么值得买和飞客茶馆的文章
-3. 微信公众号按作者分类: <https://vaayne.com/wx/(id)> (Id 即为所寻找的微信公众号的id, 区分大小写， 例如小道消息的为<https://vaayne.com/wx/WebNotes>
+3. 微信公众号按作者分类: <https://vaayne.com/wx/(id)> (Id 即为所寻找的微信公众号的id, 区分大小写， 例如小道消息的为<https://vaayne.com/wx/WebNotes> (**这是测试阶段使用的，所以设置了登陆才能查看**)
 
 ### RSS
 1. 微信公账号: <https://vaayne.com/feed/wx/(id)> 
