@@ -40,6 +40,7 @@
 
     {% block content -%}
             {% block content_title %}{% endblock %}
+            {% include "includes/flash.html" %}
             {% block page_content %}{% endblock %}
     {%- endblock content %}
 

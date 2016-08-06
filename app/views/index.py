@@ -6,7 +6,8 @@ from . import view
 from flask import render_template, request
 from .. import db
 from pymongo import DESCENDING
-from ..func import update_articles
+from flask_login import login_required
+from app.func import update_articles
 
 
 @view.route('/')
@@ -23,6 +24,7 @@ def update():
 
 
 @view.route('/wx/<aid>')
+@login_required
 def category_wx(aid):
     page = request.args.get('page', 1, type=int)
     items = db.posts.find({'spider_name': 'wx', 'aid': aid}).skip(10 * (page - 1)).sort('post_time', DESCENDING).limit(10)

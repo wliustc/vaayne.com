@@ -21,16 +21,6 @@ lm = LoginManager()
 csrf = CsrfProtect()
 
 
-def init_log(log_name):
-    log = logging.getLogger(log_name)
-    logging.basicConfig(level=logging.INFO, format="%(filename)s %(asctime)s %(levelname)s %(message)s")
-    fh = logging.FileHandler(filename=log_name + '.log', mode='w', encoding='utf-8')
-    fh.setLevel(level=logging.INFO)
-    fh.setFormatter(logging.Formatter("%(filename)s %(asctime)s %(levelname)s %(message)s"))
-    log.addHandler(fh)
-    return log
-
-
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
@@ -40,7 +30,7 @@ def create_app(config_name):
     mail.init_app(app)
     moment.init_app(app)
     lm.init_app(app)
-    lm.login_view = 'login'
+    lm.login_view = 'auth.login'
     csrf.init_app(app)
 
     from .views import view
@@ -49,6 +39,16 @@ def create_app(config_name):
     app.register_blueprint(api, url_prefix='/api')
     from .views.feed import feed
     app.register_blueprint(feed, url_prefix='/feed')
+    from .views.auth import auth
+    app.register_blueprint(auth, url_prefix='/auth')
     return app
 
 
+def init_log(log_name):
+    log = logging.getLogger(log_name)
+    logging.basicConfig(level=logging.INFO, format="%(filename)s %(asctime)s %(levelname)s %(message)s")
+    fh = logging.FileHandler(filename=log_name + '.log', mode='w', encoding='utf-8')
+    fh.setLevel(level=logging.INFO)
+    fh.setFormatter(logging.Formatter("%(filename)s %(asctime)s %(levelname)s %(message)s"))
+    log.addHandler(fh)
+    return log

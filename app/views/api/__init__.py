@@ -6,7 +6,6 @@ import json
 from pymongo import DESCENDING
 from ... import db, init_log
 
-
 api = Blueprint('api', __name__)
 
 log = init_log(__name__)
@@ -19,6 +18,7 @@ def get_data_from_sql(key, value):
     for item in items:
         item.pop('content')
         item.pop('_id')
+        item['post_time'] = item.get('post_time').strftime('%Y-%m-%d %H:%M:%S')
         datas.append(item)
     return datas
 
@@ -37,8 +37,5 @@ def create_response(key, values):
         content_type='text/html;charset=utf-8',
     )
 
-from . import fly
-from . import wx
-from . import smzdm
-
+from . import view
 

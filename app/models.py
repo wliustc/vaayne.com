@@ -2,7 +2,8 @@
 # Created by Vaayne at 2016/07/21 09:42 
 
 import hashlib
-from . import dba
+from . import db
+
 
 diac = {
     'username': 'Vaayne',
@@ -14,31 +15,22 @@ diac = {
 hass = hashlib.md5('Passwd').hexdigest()
 
 
-class Post(dba.Document):
-    title = dba.StringField()
-    post_id = dba.IntField(),
-    aid = dba.StringField(),
-    post_time = dba.StringField(),
-    author = dba.StringField(),
-    source_name = dba.StringField(),
-    spider_name = dba.StringField(),
-    source_url = dba.StringField(),
-    summary = dba.StringField(),
-    content = dba.StringField(),
-    image = dba.StringField(),
-    category = dba.StringField(),
-    slug = dba.StringField(),
-    content_type = dba.StringField()
+class Post(db.Document):
+    title = db.StringField()
+    post_id = db.IntField(),
+    aid = db.StringField(),
+    post_time = db.StringField(),
+    author = db.StringField(),
+    source_name = db.StringField(),
+    spider_name = db.StringField(),
+    source_url = db.StringField(),
+    summary = db.StringField(),
+    content = db.StringField(),
+    image = db.StringField(),
+    category = db.StringField(),
+    slug = db.StringField(),
+    content_type = db.StringField()
 
 
-class CursorWrapper(object):
 
-    """Wraps the MongoDB cursor to work with the paginate module."""
-
-    def __init__(self, cur):
-        self.cur = cur
-
-    __iter__ = lambda self: self.cur.__iter__()
-    __len__ = lambda self: self.cur.count()
-    __getitem__ = lambda self, key: self.cur.__getitem__(key)
 

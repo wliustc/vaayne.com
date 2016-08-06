@@ -8,7 +8,6 @@ import PyRSS2Gen
 import datetime
 import xml.etree.cElementTree as ET
 from arrow import Arrow
-from pprint import PrettyPrinter
 from io import StringIO
 import sys
 
@@ -126,7 +125,7 @@ def get_xml(item, items):
         ET.SubElement(i, 'title').text = item.get('title')
         # ET.SubElement(i, 'image').text = item.get('image')
         # ET.SubElement(i, 'pubDate').text = datetime.datetime.fromtimestamp(int(item.get('post_time')))
-        ET.SubElement(i, 'pubDate').text = Arrow.fromtimestamp(int(item.get('post_time'))).format('YYYY-MM-DD HH:mm:ss')
+        ET.SubElement(i, 'pubDate').text = item.get('post_time').strftime('%Y-%m-%d %H:%M:%S')
         ET.SubElement(i, 'link').text = item.get('source_url')
         # ET.SubElement(i, 'summary').text = item.get('summary')
         # ET.SubElement(i, 'description').text = item.get('content')
@@ -136,7 +135,6 @@ def get_xml(item, items):
     tree.write(sys.stdout)
     print f.getvalue()
     return f.getvalue()
-    # return ET.dump(root)
 
 
 def create_response(rss):
@@ -148,7 +146,5 @@ def create_response(rss):
     )
 
 
-from . import wx
-from . import fly
-from . import smzdm
+from . import view
 

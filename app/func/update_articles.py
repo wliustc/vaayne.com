@@ -3,8 +3,8 @@
 
 from gevent.monkey import patch_all
 patch_all()
-from ..views.api import fly, smzdm, wx
-from .. import db
+from insert_sql import fly_insert_sql, smzdm_insert_sql, wx_insert_sql
+from app import db
 import gevent
 from gevent.pool import Pool
 
@@ -17,13 +17,13 @@ for item in db.wx_source.find():
 
 def update_wx():
     p = Pool(100)
-    p.map(wx.insert_sql, symbols)
+    p.map(wx_insert_sql, symbols)
 
 
 def update():
     gevent.joinall([
         gevent.spawn(update_wx()),
-        gevent.spawn(smzdm.insert_sql()),
-        gevent.spawn(fly.insert_sql(1))
+        gevent.spawn(smzdm_insert_sql()),
+        gevent.spawn(fly_insert_sql(1))
     ])
 
