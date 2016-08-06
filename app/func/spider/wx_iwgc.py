@@ -32,8 +32,8 @@ class WxWGC(WX):
         self.author = info.group(2)
         return url
 
-    def get_articles(self, base_url):
-        for i in range(1, 20):
+    def get_articles(self, base_url, page):
+        for i in range(1, page):
             url = '%s/p/%s' % (base_url, i)
             self.log.info('Now is page %s, %s' % (i, url))
             r = self.req(url)
@@ -69,12 +69,12 @@ class WxWGC(WX):
                         source_url=source_url, summary=summary, spider_name=self.spider_name,
                         content=content, image=image, category=self.category, aid=self.aid)
 
-    def run(self):
+    def run(self, page):
         try:
             url = self.search_id(self.aid)
             if not url:
                 return
-            self.get_articles(url)
+            self.get_articles(url, page)
             return True
         except Exception as e:
             self.log.exception(e)

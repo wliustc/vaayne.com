@@ -113,7 +113,7 @@ class Spider(object):
         )
         try:
             self.db.posts.insert(post)
-            self.log.info(u"Insert %s sucess.".encode('utf-8') % title)
+            self.log.info(u"Insert %s  from %s sucess.".encode('utf-8') % (title, source_name))
             self.insert_redis(source_url)
         except Exception as e:
             # self.log.exception(e)
