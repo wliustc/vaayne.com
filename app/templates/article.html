@@ -18,8 +18,13 @@
 
                 <!-- Author -->
                 <p class="base-info">
-                    by <a href={{ item.source_url }}>{{ item.source_name }}</a>&nbsp;&nbsp;
-                    发布于 <span class="post_time"><b>{{ moment(timestamp=item.post_time, local=true).format('YYYY-MM-DD HH:mm:ss') }}</b></span>
+                    {% if item.spider_name == 'wx' %}
+                        by <a href={{ url_for('view.category_wx', aid=item.aid ) }}>{{ item.source_name }}</a>&nbsp;&nbsp;
+                    {% else %}
+                        by <a href={{ url_for('view.category', kind=item.spider_name ) }}>{{ item.source_name }}</a>&nbsp;&nbsp;
+                    {% endif %}
+                    发布于 <span class="post_time"><b>{{ moment(timestamp=item.post_time, local=true).format('YYYY-MM-DD HH:mm:ss') }}</b></span>&nbsp;&nbsp;
+                    <span class="source_url"><a href={{ item.source_url }} target="_blank">阅读原文</a></span>
                 </p>
 
                 <hr>

@@ -20,7 +20,7 @@ def get_data_from_sql(key, value):
         item.pop('_id')
         item.pop('spider_name')
         item.pop('slug')
-        
+
         item['post_time'] = item.get('post_time').strftime('%Y-%m-%d %H:%M:%S')
         datas.append(item)
     return datas

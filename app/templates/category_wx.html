@@ -30,33 +30,33 @@
   <ul class="pagination pagination-lg">
     <li>
         {% if page  > 5 %}
-                 <a href={{ url_for('view.category', page=page-5, kind=kind) }} aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                 <a href={{ url_for('view.category_wx', page=page-5, aid=aid) }} aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
         {% else %}
-                <a class="previous disabled" href={{ url_for('view.category', page=page-5, kind=kind) }} aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                <a class="previous disabled" href={{ url_for('view.category_wx', page=page-5, aid=aid) }} aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
         {% endif %}
 
     </li>
       {% if page  < 5 %}
          {% for i in range(1, 6) %}
           {% if i == page  %}
-                <li class="active"><a href={{ url_for('view.category', page=i, kind=kind) }}> {{ i }} </a></li>
+                <li class="active"><a href={{ url_for('view.category_wx', page=i, aid=aid) }}> {{ i }} </a></li>
             {%  else %}
-                <li><a href={{ url_for('view.category', page=i, kind=kind) }}>{{ i }}</a></li>
+                <li><a href={{ url_for('view.category_wx', page=i, aid=aid) }}>{{ i }}</a></li>
             {% endif %}
          {% endfor %}
       {% else %}
-          {% for i in range(page-2, page+3) %}
+          {% for i in range(page-2, page+3, aid=aid) %}
             {% if i == page  %}
-                <li class="active"><a href={{ url_for('view.category', page=i, kind=kind) }}> {{ i }} </a></li>
+                <li class="active"><a href={{ url_for('view.category_wx', page=i, aid=aid) }}> {{ i }} </a></li>
             {%  else %}
-                <li><a href={{ url_for('view.category', page=i, kind=kind) }}>{{ i }}</a></li>
+                <li><a href={{ url_for('view.category_wx', page=i, aid=aid) }}>{{ i }}</a></li>
             {% endif %}
         {% endfor %}
       {% endif %}
 
 
     <li>
-      <a href={{ url_for('view.category', page=page+5, kind=kind) }} aria-label="Next">
+      <a href={{ url_for('view.category_wx', page=page+5, aid=aid) }} aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
