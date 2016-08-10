@@ -8,7 +8,7 @@ env.hosts = ['root@blog']
 
 
 def push():
-    with lcd(os.path.abspath(__file__)):
+    with lcd(os.path.split(os.path.abspath(__file__))[0]):
         local('git pull')
         local('git push')
 
