@@ -39,7 +39,10 @@ class Smzdm(Spider):
             source_url = data.get('article_url')
             # summary = data.get('summary')
             content = data.get('article_filter_content').encode('utf-8')
-            content = self.get_img(BeautifulSoup(content, 'lxml'), 'src').encode('utf-8')
+            try:
+                content = self.get_img(BeautifulSoup(content, 'lxml'), 'src').encode('utf-8')
+            except Exception as e:
+                print (e)
             image = data.get('article_pic')
             # self.add_result(title=title, author=author, post_time=post_time, source_name=self.spider_name,
             #                 source_url=source_url, summary=summary,

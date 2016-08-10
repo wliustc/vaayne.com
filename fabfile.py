@@ -16,6 +16,8 @@ def push():
 def depoly():
     with cd('/var/www/vaayne.com'):
         run('git pull')
+        run('supervisorctl restart vaayne')
+        run('tail -f /var/log/supervisor/vaayne.log')
 
 
 def go():

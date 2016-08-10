@@ -53,8 +53,8 @@ class WX(Spider):
         r = self.req(url)
         soup = BeautifulSoup(r.text, 'lxml')
         content = soup.find(class_='rich_media_content')
-        content = self.get_img(content, 'data-src')
         try:
+            content = self.get_img(content, 'data-src')
             img = content.find('img')['src']
         except:
             img = ''

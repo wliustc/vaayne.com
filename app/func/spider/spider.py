@@ -21,7 +21,6 @@ class Spider(object):
     proxy_api = 'http://ent.kuaidaili.com/api/getproxy?orderid=936588863967175&num=100&kps=1&format=json'
     proxy_list = requests.get(proxy_api).json()['data']['proxy_list']
 
-
     @staticmethod
     def init_log(log_name):
         log = logging.getLogger(log_name)

@@ -37,8 +37,10 @@ class FlyerTea(Spider):
             source_url = 'http://www.flyertea.com/article-%s-1.html' % aid
             summary = data.get('summary')
             content = data.get('content').encode('utf-8')
-            print type(content)
-            content = self.get_img(BeautifulSoup(content, 'lxml'), 'src').encode('utf-8')
+            try:
+                content = self.get_img(BeautifulSoup(content, 'lxml'), 'src').encode('utf-8')
+            except Exception as e:
+                print (e)
             aid = aid
             image = data.get('face')
             # self.add_result(title=title, author=author, post_time=post_time, source_name=self.spider_name,
