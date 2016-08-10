@@ -19,7 +19,7 @@ def fly_rss():
 
 @feed.route('/wx/<aid>')
 def wx_rss(aid):
-    db.wx_source.update({'wx_id': aid}, {'wx_id': aid}, upsert=True)
+    # db.wx_source.update({'wx_id': aid}, {'wx_id': aid}, upsert=True)
     wx_insert_sql(aid)
     rss = gen_rss('aid', aid)
     return create_response(rss)
