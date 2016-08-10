@@ -3,13 +3,13 @@
 from gevent.monkey import patch_all
 patch_all()
 from gevent.pool import Pool
-from spider import Spider
+from spider import Spider, log
 from bs4 import BeautifulSoup
 
 
 class FlyerTea(Spider):
     def __init__(self):
-        self.log = Spider().init_log(__name__)
+        self.log = log
         self.category = u'信用卡'
         self.spider_name = u'flyertea'
         # self.api_list = 'http://www.flyertea.com/source/plugin/mobile/mobile.php?' \

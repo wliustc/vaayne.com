@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # Created by Vaayne at 2016/07/28 16:59 
 
-from spider import Spider
+from spider import Spider, log
 import requests
 import re
 import random
@@ -15,7 +15,7 @@ u = re.compile(r'"uuid":"(\w+)"')
 
 
 class WX(Spider):
-    log = Spider().init_log(__name__)
+    log = log
     spider_name = 'wx'
     category = u'微信公众号'
 

@@ -4,14 +4,14 @@
 from gevent.monkey import patch_all
 patch_all()
 import gevent
-from spider import Spider
+from spider import Spider, log
 from arrow import Arrow
 from bs4 import BeautifulSoup
 
 
 class Smzdm(Spider):
     def __init__(self):
-        self.log = Spider().init_log(__name__)
+        self.log = log
         self.spider_name = u'smzdm'
         self.category = u'信用卡'
         self.kinds = ['news', 'jingyan', 'show', 'youhui', 'haitao', 'faxian']

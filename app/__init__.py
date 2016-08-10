@@ -45,10 +45,37 @@ def create_app(config_name):
 
 
 def init_log(log_name):
-    log = logging.getLogger(log_name)
-    logging.basicConfig(level=logging.INFO, format="%(filename)s %(asctime)s %(levelname)s %(message)s")
-    fh = logging.FileHandler(filename=log_name + '.log', mode='w', encoding='utf-8')
-    fh.setLevel(level=logging.INFO)
-    fh.setFormatter(logging.Formatter("%(filename)s %(asctime)s %(levelname)s %(message)s"))
-    log.addHandler(fh)
-    return log
+    import logging
+    LOG_LEVEL = logging.INFO
+    from colorlog import ColoredFormatter
+    # logging.root.setLevel(LOG_LEVEL)
+    formatter = ColoredFormatter(
+        "%(log_color)s%(asctime)-8s%(reset)s-%(log_color)s%(name)s-%(log_color)s%(filename)s| "
+        "%(log_color)s%(levelname)8s%(reset)s | %(log_color)s%(message)s",
+        datefmt=None,
+        reset=True,
+        log_colors={
+            'DEBUG': 'cyan',
+            'INFO': 'green',
+            'WARNING': 'yellow',
+            'ERROR': 'red',
+            'CRITICAL': 'red,bg_white',
+        },
+        secondary_log_colors={},
+        style='%'
+    )
+
+    stream = logging.StreamHandler()
+    stream.setLevel(LOG_LEVEL)
+    stream.setFormatter(formatter)
+
+    fh = logging.FileHandler(filename=log_name+'.log', encoding='utf-8')
+    fh.setLevel(LOG_LEVEL)
+    fh.setFormatter(formatter)
+
+    log_ = logging.getLogger(log_name)
+    log_.setLevel(LOG_LEVEL)
+    log_.addHandler(stream)
+    log_.addHandler(fh)
+
+    return log_

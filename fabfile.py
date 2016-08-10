@@ -20,6 +20,12 @@ def depoly():
         run('tail -f /var/log/supervisor/vaayne.log')
 
 
+def restart():
+    with cd('/var/www/vaayne.com'):
+        run('supervisorctl restart vaayne')
+        run('tail -f /var/log/supervisor/vaayne.log')
+
+
 def go():
     push()
     depoly()

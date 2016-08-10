@@ -5,7 +5,6 @@
 from .. import db
 from . import view, log
 from flask import abort, render_template
-from datetime import datetime
 
 
 @view.route('/article/<int:post_id>')

@@ -12,6 +12,8 @@ from redis import StrictRedis
 from random import choice
 from pymongo import MongoClient, DESCENDING
 from datetime import datetime
+from ... import init_log
+log = init_log(__file__)
 
 
 class Spider(object):
@@ -20,16 +22,6 @@ class Spider(object):
     db = MongoClient().blog
     proxy_api = 'http://ent.kuaidaili.com/api/getproxy?orderid=936588863967175&num=100&kps=1&format=json'
     proxy_list = requests.get(proxy_api).json()['data']['proxy_list']
-
-    @staticmethod
-    def init_log(log_name):
-        log = logging.getLogger(log_name)
-        logging.basicConfig(level=logging.INFO, format="%(filename)s %(asctime)s %(levelname)s %(message)s")
-        fh = logging.FileHandler(filename=log_name + '.log', mode='w', encoding='utf-8')
-        fh.setLevel(level=logging.INFO)
-        fh.setFormatter(logging.Formatter("%(filename)s %(asctime)s %(levelname)s %(message)s"))
-        log.addHandler(fh)
-        return log
 
     def req(self, url, **kwargs):
         header = {'User-Agent': generate_user_agent()}
