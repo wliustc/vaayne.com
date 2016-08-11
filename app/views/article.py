@@ -3,11 +3,12 @@
 
 
 from .. import db
-from . import view, log
+from . import view, log, cache
 from flask import abort, render_template
 
 
 @view.route('/article/<int:post_id>')
+@cache.cached(timeout=60*5)
 def article(post_id):
     log.info("Try to find the article.")
     item = db.posts.find_one({'post_id': post_id})

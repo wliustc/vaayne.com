@@ -11,6 +11,7 @@ import logging
 from config.config import config
 from flask_login import LoginManager
 from flask_wtf.csrf import CsrfProtect
+from flask_cache import Cache
 
 
 bootstrap = Bootstrap()
@@ -19,6 +20,7 @@ moment = Moment()
 db = MongoClient().blog
 lm = LoginManager()
 csrf = CsrfProtect()
+cache = Cache()
 
 
 def create_app(config_name):
@@ -32,6 +34,7 @@ def create_app(config_name):
     lm.init_app(app)
     lm.login_view = 'auth.login'
     csrf.init_app(app)
+    cache.init_app(app)
 
     from .views import view
     app.register_blueprint(view)

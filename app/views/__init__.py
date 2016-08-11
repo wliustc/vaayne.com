@@ -8,7 +8,7 @@ view = Blueprint('view', __name__,
                  static_folder='static'
                  )
 
-from .. import init_log
+from .. import init_log, cache
 log = init_log('view')
 
 from . import index, error, get_img, article, search, pac

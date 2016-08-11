@@ -2,7 +2,7 @@
 # Created by Vaayne at 2016/07/27 12:59 
 
 
-from . import view
+from . import view, cache
 from flask import render_template, request
 from .. import db
 from pymongo import DESCENDING
@@ -11,6 +11,7 @@ from app.func import update_articles, insert_sql
 
 
 @view.route('/')
+@cache.cached(timeout=60*5)
 def index():
     page = request.args.get('page', 1, type=int)
     items = db.posts.find({'spider_name': 'wx'}).skip(10 * (page - 1)).sort('post_time', DESCENDING).limit(10)
@@ -24,6 +25,7 @@ def update():
 
 
 @view.route('/wx/<aid>')
+@cache.cached(timeout=60*5)
 @login_required
 def category_wx(aid):
     if not request.args.get('page') or request.args.get('page') == 1:
@@ -35,6 +37,7 @@ def category_wx(aid):
 
 
 @view.route('/category/<kind>')
+@cache.cached(timeout=60*5)
 def category(kind):
     if not request.args.get('page') or request.args.get('page') == 1:
         if kind == 'smzdm':
