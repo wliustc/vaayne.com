@@ -2,7 +2,7 @@
 # Created by Vaayne at 2016/07/27 12:59 
 
 
-from . import view, cache
+from . import view
 from flask import render_template, request
 from .. import db
 from pymongo import DESCENDING
@@ -24,7 +24,6 @@ def update():
 
 
 @view.route('/wx/<aid>')
-@cache.cached(timeout=60*5)
 @login_required
 def category_wx(aid):
     if not request.args.get('page') or request.args.get('page') == 1:
@@ -36,7 +35,6 @@ def category_wx(aid):
 
 
 @view.route('/category/<kind>')
-@cache.cached(timeout=60*5)
 def category(kind):
     if not request.args.get('page') or request.args.get('page') == 1:
         if kind == 'smzdm':
