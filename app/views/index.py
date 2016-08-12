@@ -11,7 +11,6 @@ from app.func import update_articles, insert_sql
 
 
 @view.route('/')
-@cache.cached(timeout=60*5)
 def index():
     page = request.args.get('page', 1, type=int)
     items = db.posts.find({'spider_name': 'wx'}).skip(10 * (page - 1)).sort('post_time', DESCENDING).limit(10)

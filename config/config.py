@@ -14,6 +14,10 @@ class Config:
     CACHE_REDIS_HOST = '127.0.0.1'
     CACHE_REDIS_PORT = 6379
 
+    @staticmethod
+    def init_app(app):
+        pass
+
 
 class ProductionConfig(Config):
     MONGODB_DATABASE = 'blog'

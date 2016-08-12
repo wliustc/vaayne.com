@@ -7,7 +7,6 @@ from flask_bootstrap import Bootstrap
 from pymongo import MongoClient
 from flask_mail import Mail
 from flask_moment import Moment
-import logging
 from config.config import config
 from flask_login import LoginManager
 from flask_wtf.csrf import CsrfProtect
@@ -47,38 +46,31 @@ def create_app(config_name):
     return app
 
 
-def init_log(log_name):
-    import logging
-    LOG_LEVEL = logging.INFO
-    from colorlog import ColoredFormatter
-    # logging.root.setLevel(LOG_LEVEL)
-    formatter = ColoredFormatter(
-        "%(log_color)s%(asctime)-8s%(reset)s-%(log_color)s%(name)s-%(log_color)s%(filename)s| "
-        "%(log_color)s%(levelname)8s%(reset)s | %(log_color)s%(message)s",
-        datefmt=None,
-        reset=True,
+def init_log(name, level="INFO"):
+    import logging, colorlog
+    formatter = colorlog.ColoredFormatter(
+        fmt="%(log_color)s%(asctime)s-%(name)s | %(levelname)-8s| %(message)s",
+        datefmt='%Y-%m-%d %H:%M:%S',
         log_colors={
-            'DEBUG': 'cyan',
+            'DEBUG': 'white',
             'INFO': 'green',
             'WARNING': 'yellow',
             'ERROR': 'red',
-            'CRITICAL': 'red,bg_white',
-        },
-        secondary_log_colors={},
-        style='%'
+            'CRITICAL': 'bold_red',
+        }
     )
-
-    stream = logging.StreamHandler()
-    stream.setLevel(LOG_LEVEL)
-    stream.setFormatter(formatter)
-
-    fh = logging.FileHandler(filename=log_name+'.log', encoding='utf-8')
-    fh.setLevel(LOG_LEVEL)
-    fh.setFormatter(formatter)
-
-    log_ = logging.getLogger(log_name)
-    log_.setLevel(LOG_LEVEL)
-    log_.addHandler(stream)
+    sh = logging.StreamHandler()
+    fh = logging.FileHandler(filename=name + '.log', encoding='utf-8')
+    logging._defaultFormatter = formatter
+    log_ = logging.getLogger(name)
+    level_name = {
+        'debug': logging.DEBUG,
+        'info': logging.INFO,
+        'warn': logging.WARN,
+        'error': logging.ERROR,
+        'critical': logging.CRITICAL
+    }
+    log_.setLevel(level=level_name.get(level.lower()))
+    log_.addHandler(sh)
     log_.addHandler(fh)
-
     return log_
