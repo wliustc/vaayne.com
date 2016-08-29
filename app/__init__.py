@@ -40,6 +40,8 @@ def create_app(config_name):
     app.register_blueprint(feed, url_prefix='/feed')
     from .views.auth import auth
     app.register_blueprint(auth, url_prefix='/auth')
+    from .views.gzh import gzh
+    app.register_blueprint(gzh, url_prefix='/gzh')
     return app
 
 
@@ -57,7 +59,7 @@ def init_log(name, level="INFO"):
         }
     )
     sh = logging.StreamHandler()
-    fh = logging.FileHandler(filename=name + '.log', encoding='utf-8')
+    fh = logging.FileHandler(filename=name + '.log')
     logging._defaultFormatter = formatter
     log_ = logging.getLogger(name)
     level_name = {

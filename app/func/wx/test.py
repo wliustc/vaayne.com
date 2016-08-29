@@ -6,12 +6,12 @@ import json
 
 pp = PrettyPrinter(indent=4)
 
-with open('group.json') as f:
+with open('public.json') as f:
     con = f.readlines()
     for item in con:
         item = json.loads(item)
-        # pp.pprint(item)
-        print '1.', item.get('Alias'), '2.', item.get('NickName'), '3.', item.get('RemarkName'), '4.', item.get('city')
+        if item.get('VerifyFlag') == 8:
+            print '1.', item.get('Alias'), '2.', item.get('NickName'), '3.', item.get('RemarkName')
 
 
 

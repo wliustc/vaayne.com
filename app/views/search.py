@@ -3,7 +3,7 @@
 
 from .. import db
 from ..func import insert_sql
-from . import view, cache
+from . import view
 from flask import request, abort, render_template, flash, url_for
 from flask_wtf import Form
 from wtforms import StringField, SubmitField
@@ -26,7 +26,6 @@ def try_find(aid):
 
 
 @view.route('/search')
-@cache.cached(timeout=60*5)
 def search_result():
     aid = request.args.get('aid')
     items = try_find(aid)

@@ -6,6 +6,7 @@ import json
 from pymongo import DESCENDING
 from ... import db, init_log
 
+
 api = Blueprint('api', __name__)
 
 log = init_log(__name__)

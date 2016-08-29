@@ -26,7 +26,7 @@ def wx_insert_sql(symbol):
         log.info('Already add this account, update it from iWgc, First Page.')
         try:
             wgc = WxWGC(symbol)
-            if not wgc.run(1):
+            if not wgc.run(2):
                 log.info('Not found in iWgc, Start update it from NewRank.')
                 wx.run(symbol)
         except Exception as e:

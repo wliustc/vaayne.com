@@ -8,6 +8,7 @@ from .. import db
 from pymongo import DESCENDING
 from flask_login import login_required
 from app.func import update_articles, insert_sql
+from app.func.del_wx import d_wx
 
 
 @view.route('/')
@@ -21,6 +22,15 @@ def index():
 def update():
     update_articles.update()
     return '<h1>更新数据成功</h1>'
+
+
+@view.route('/wx/del')
+@login_required
+def del_wx():
+    aids = request.args.get('id')
+    for aid in aids.split(','):
+        d_wx(aid)
+    return '<h1>Success del</h1>'
 
 
 @view.route('/wx/<aid>')

@@ -11,7 +11,6 @@ from arrow import Arrow
 from io import StringIO
 import sys
 
-
 feed = Blueprint('feed', __name__)
 log = init_log(__name__)
 
