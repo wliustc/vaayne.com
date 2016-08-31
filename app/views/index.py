@@ -16,6 +16,7 @@ def index():
     page = request.args.get('page', 1, type=int)
     items = db.posts.find({'spider_name': 'wx'}).skip(10 * (page - 1)).sort('post_time', DESCENDING).limit(10)
     return render_template('index.html', items=items, page=page)
+    # return '<h1>Hello World!</h1>'
 
 
 @view.route('/update')

@@ -3,7 +3,7 @@
 from gevent.monkey import patch_all
 patch_all()
 from gevent.pool import Pool
-from spider import Spider, log
+from .spider import Spider, log
 from bs4 import BeautifulSoup
 
 

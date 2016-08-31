@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # Created by Vaayne at 2016/07/28 16:59 
 
-from spider import Spider, log
+from .spider import Spider, log
 import requests
 import re
 import random
@@ -26,7 +26,7 @@ class WX(Spider):
         for i in range(9):
             e = int(math.floor(random.random() * 16))
             res += a[e]
-        print res
+        print (res)
         return res
 
     @staticmethod

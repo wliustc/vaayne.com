@@ -4,7 +4,7 @@
 from gevent.monkey import patch_all
 patch_all()
 import gevent
-from spider import Spider, log
+from .spider import Spider, log
 from arrow import Arrow
 from bs4 import BeautifulSoup
 

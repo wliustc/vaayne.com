@@ -46,30 +46,7 @@ def create_app(config_name):
 
 
 def init_log(name, level="INFO"):
-    import logging, colorlog
-    formatter = colorlog.ColoredFormatter(
-        fmt="%(log_color)s%(asctime)s-%(name)s | %(levelname)-8s| %(message)s",
-        datefmt='%Y-%m-%d %H:%M:%S',
-        log_colors={
-            'DEBUG': 'white',
-            'INFO': 'green',
-            'WARNING': 'yellow',
-            'ERROR': 'red',
-            'CRITICAL': 'bold_red',
-        }
-    )
-    sh = logging.StreamHandler()
-    fh = logging.FileHandler(filename=name + '.log')
-    logging._defaultFormatter = formatter
+    import logging, coloredlogs
     log_ = logging.getLogger(name)
-    level_name = {
-        'debug': logging.DEBUG,
-        'info': logging.INFO,
-        'warn': logging.WARN,
-        'error': logging.ERROR,
-        'critical': logging.CRITICAL
-    }
-    log_.setLevel(level=level_name.get(level.lower()))
-    log_.addHandler(sh)
-    log_.addHandler(fh)
+    coloredlogs.install(level)
     return log_

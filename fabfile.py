@@ -4,7 +4,7 @@
 from fabric.api import *
 import os
 
-env.hosts = ['root@blog']
+env.hosts = ['vaayne@blog']
 
 
 def push():
@@ -22,7 +22,7 @@ def depoly():
 
 def restart():
     with cd('/var/www/vaayne.com'):
-        run('supervisorctl restart vaayne')
+        run('sudo supervisorctl restart vaayne')
         run('tail -f /var/log/supervisor/vaayne.log')
 
 

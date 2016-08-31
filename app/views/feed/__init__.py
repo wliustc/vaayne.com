@@ -132,7 +132,7 @@ def get_xml(item, items):
     tree = ET.ElementTree(root)
     f = StringIO()
     tree.write(sys.stdout)
-    print f.getvalue()
+    print (f.getvalue())
     return f.getvalue()
 
 

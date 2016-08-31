@@ -4,7 +4,7 @@
 from gevent.monkey import patch_all
 patch_all()
 from gevent.pool import Pool
-from wx import WX
+from .wx import WX
 import re
 from arrow import Arrow
 
@@ -64,7 +64,7 @@ class WxWGC(WX):
         if self.repeat_check(source_url):
             return
         content, image = self.get_content(source_url)
-        print title.encode('utf-8'), post_time
+        print(title.encode('utf-8'), post_time)
         self.add_result(title=title, author=self.author, post_time=post_time, source_name=self.author,
                         source_url=source_url, summary=summary, spider_name=self.spider_name,
                         content=content, image=image, category=self.category, aid=self.aid)
