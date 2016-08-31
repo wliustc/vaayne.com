@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 # Created by Vaayne at 2016/08/12 17:24 
-import os
 import gevent.monkey
 gevent.monkey.patch_all()
 
