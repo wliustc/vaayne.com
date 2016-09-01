@@ -1,33 +1,22 @@
 # -*- coding:utf-8 -*-
 # Created by Vaayne at 2016/07/28 16:59 
 
-from .spider import Spider, log
+from app.func.spider import Spider
 import requests
 import re
-import random
-import math
 from arrow import Arrow
 from bs4 import BeautifulSoup
-from ...views.get_img import get_img
-from flask import url_for
+
 
 u = re.compile(r'"uuid":"(\w+)"')
 
 
 class WX(Spider):
-    log = log
     spider_name = 'wx'
     category = u'微信公众号'
 
-    @staticmethod
-    def get_nonce():
-        a = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
-        res = ''
-        for i in range(9):
-            e = int(math.floor(random.random() * 16))
-            res += a[e]
-        print (res)
-        return res
+    def __init__(self):
+        super().__init__()
 
     @staticmethod
     def get_uuid(symbol):
@@ -43,14 +32,8 @@ class WX(Spider):
         p = re.compile('&scene=.*')
         return p.sub('', url, count=1)
 
-    # def get_content(self, url):
-    #     r = requests.get(url)
-    #     q = self.pq(r.text)
-    #     content = q('.rich_media_content').html()
-    #     return content
-
     def get_content(self, url):
-        r = self.req(url)
+        r = self.req_get(url)
         soup = BeautifulSoup(r.text, 'lxml')
         content = soup.find(class_='rich_media_content')
         try:
@@ -58,7 +41,7 @@ class WX(Spider):
             img = content.find('img')['src']
         except:
             img = ''
-        return unicode(content), img
+        return content, img
 
     def run(self, symbol):
         uid = self.get_uuid(symbol)
@@ -67,10 +50,8 @@ class WX(Spider):
         url = 'http://www.newrank.cn/xdnphb/detail/getAccountArticle'
         params = {
             'uuid': uid,
-            # 'nonce': '5bfcd1ae8',
-            # 'xyz': '991deed649e6af9d3b8693b204729f7e'
         }
-        r = requests.post(url, data=params)
+        r = self.req_post(url, data=params)
         datas = r.json()
         try:
             infos = datas['value']['lastestArticle']
@@ -89,19 +70,12 @@ class WX(Spider):
                     image = img
                 else:
                     image = info.get('imageUrl')
-                # print title, account, author, post_time
-                # print summary
-                # print source_url
-                # print content
                 self.add_result(title=title, author=author, post_time=post_time, source_name=author,
                                 source_url=source_url, summary=summary, spider_name=self.spider_name,
                                 content=content, image=image, category=self.category, aid=wx_id)
         except Exception as e:
             self.log.error(e)
-        # return dict(
-        #         wx_id=symbol,
-        #         author=author,
-        #         )
+
 
 
 

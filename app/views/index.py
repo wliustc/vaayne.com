@@ -6,17 +6,16 @@ from . import view
 from flask import render_template, request
 from .. import db
 from pymongo import DESCENDING
-from flask_login import login_required
+from flask_login import login_required, LoginManager
 from app.func import update_articles, insert_sql
 from app.func.del_wx import d_wx
 
 
 @view.route('/')
 def index():
-    # page = request.args.get('page', 1, type=int)
-    # items = db.posts.find({'spider_name': 'wx'}).skip(10 * (page - 1)).sort('post_time', DESCENDING).limit(10)
-    # return render_template('index.html', items=items, page=page)
-    return '<h1>Hello World!</h1>'
+    page = request.args.get('page', 1, type=int)
+    items = db.posts.find({'spider_name': 'wx'}).skip(10 * (page - 1)).sort('post_time', DESCENDING).limit(10)
+    return render_template('index.html', items=items, page=page)
 
 
 @view.route('/update')
