@@ -5,7 +5,7 @@ from .. import db, init_log
 
 log = init_log(__name__)
 
-from . import spider
-from . import insert_sql
-from . import del_wx
+# from . import spider
+# from . import insert_sql
+# from . import del_wx
 

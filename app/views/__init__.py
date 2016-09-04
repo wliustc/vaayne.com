@@ -12,3 +12,4 @@ from .. import init_log
 log = init_log('view')
 
 from . import index, error, get_img, article, search
+

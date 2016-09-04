@@ -1,5 +1,5 @@
 <h2>
-    <a href={{ url_for('view.article', post_id=item.post_id, _external=True) }}>{{ item.title }}</a>
+    <a href={{ url_for('view.article', post_id=item.post_id) }}>{{ item.title }}</a>
 </h2>
 
 <p class="base-info">
@@ -21,5 +21,5 @@
 
 <p>{{ item.summary }}</p>
 
-<a class="btn btn-primary" href={{ url_for('view.article', post_id=item.post_id, _external=True) }}>Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+<a class="btn btn-primary" href={{ url_for('view.article', post_id=item.post_id) }}>Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 <hr>

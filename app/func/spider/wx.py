@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 # Created by Vaayne at 2016/07/28 16:59 
 
-from app.func.spider import Spider
+from .spider import Spider
 import requests
 import re
 from arrow import Arrow
@@ -13,7 +13,7 @@ u = re.compile(r'"uuid":"(\w+)"')
 
 class WX(Spider):
     spider_name = 'wx'
-    category = u'微信公众号'
+    category = '微信公众号'
 
     def __init__(self):
         super().__init__()
@@ -37,10 +37,10 @@ class WX(Spider):
         soup = BeautifulSoup(r.text, 'lxml')
         content = soup.find(class_='rich_media_content')
         try:
-            content = self.get_img(content, 'data-src')
             img = content.find('img')['src']
         except:
             img = ''
+        content = self.get_img(content, 'data-src')
         return content, img
 
     def run(self, symbol):

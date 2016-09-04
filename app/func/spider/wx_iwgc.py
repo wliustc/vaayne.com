@@ -3,7 +3,7 @@
 from gevent.monkey import patch_all
 patch_all()
 from gevent.pool import Pool
-from app.func.spider.wx import WX
+from .wx import WX
 import re
 from arrow import Arrow
 

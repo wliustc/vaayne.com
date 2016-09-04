@@ -2,7 +2,7 @@
 # Created by Vaayne at 2016/08/06 19:32 
 
 from .. import db
-from ..func import insert_sql
+# from ..func import insert_sql
 from . import view
 from flask import request, abort, render_template, flash, url_for
 from flask_wtf import Form
@@ -17,7 +17,7 @@ class SearchForm(Form):
 
 
 def try_find(aid):
-    log.info(u'Try to find %s in wx_source'.encode('utf-8') % aid)
+    log.info('Try to find %s in wx_source' % aid)
     items = db.wx_source.find({'$or': [
         {'wx_name': {'$regex': aid, '$options': 'i'}},
         {'wx_id': {'$regex': aid, '$options': 'i'}}
@@ -34,7 +34,7 @@ def search_result():
         return render_template('search.html', items=items)
     else:
         log.info('Try to find %s not success, Try to crawl it from web.')
-        insert_sql.wx_insert_sql(aid)
+        # insert_sql.wx_insert_sql(aid)
         items = try_find(aid)
         if len(items):
             log.info('Success find %s, Show results.' % aid)

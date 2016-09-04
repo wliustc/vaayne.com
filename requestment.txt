@@ -20,5 +20,4 @@ pyquery==1.2.13
 PyRSS2Gen==1.1
 redis==2.10.5
 requests==2.11.1
-Scrapy==1.1.2
 user-agent==0.1.4
