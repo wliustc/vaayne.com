@@ -33,7 +33,7 @@ def wx_api():
         abort(404)
         return
     symbols = symbols.replace(' ', '').split(',')
-    print symbols
+    print(symbols)
     p = Pool(16)
     p.map(wx_insert_sql, symbols)
     return create_response('aid', symbols)

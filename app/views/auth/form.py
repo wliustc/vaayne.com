@@ -3,7 +3,7 @@
 from flask_wtf import Form, RecaptchaField
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, ValidationError
 from wtforms.validators import DataRequired, Email, Length, Regexp, EqualTo
-from user import User
+from .user import User
 from ... import db
 
 
@@ -30,12 +30,12 @@ class RegistrationForm(Form):
     submit = SubmitField()
 
     def validate_email(self, field):
-        print type(field), field
+        print (type(field), field)
         if db.users.find_one({'email': field.data}):
             raise ValidationError(u'此Email已经注册')
 
     def validate_username(self, field):
-        print type(field), field
+        print (type(field), field)
         if db.users.find_one({'username': {'$regex': field.data, '$options':"$i"}}):
             raise ValidationError(u'此用户名已存在')
 

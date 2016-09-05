@@ -3,7 +3,7 @@
 
 from gevent.monkey import patch_all
 patch_all()
-from insert_sql import fly_insert_sql, smzdm_insert_sql, wx_insert_sql
+from .insert_sql import fly_insert_sql, smzdm_insert_sql, wx_insert_sql
 from app import db
 import gevent
 from gevent.pool import Pool

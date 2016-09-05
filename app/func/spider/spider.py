@@ -4,7 +4,6 @@
 import requests
 from requests.auth import HTTPProxyAuth
 from pyquery import PyQuery
-import logging
 from user_agent import generate_user_agent
 import re
 import hashlib
@@ -12,70 +11,79 @@ from redis import StrictRedis
 from random import choice
 from pymongo import MongoClient, DESCENDING
 from datetime import datetime
-from ... import init_log
-log = init_log(__file__)
+from .bloomfilter import BloomFilter
+import logging
+import coloredlogs
+
+logger = logging.getLogger(__name__)
+coloredlogs.install(logging.INFO)
+
+proxy_api = 'http://ent.kuaidaili.com/api/getproxy?orderid=936588863967175&num=100&kps=1&format=json'
+proxy_list = requests.get(proxy_api).json()['data']['proxy_list']
 
 
 class Spider(object):
-    rds = StrictRedis(host='localhost', port=6379, db=1)
-    pq = PyQuery
-    db = MongoClient().blog
-    proxy_api = 'http://ent.kuaidaili.com/api/getproxy?orderid=936588863967175&num=100&kps=1&format=json'
-    proxy_list = requests.get(proxy_api).json()['data']['proxy_list']
+    def __init__(self):
+        self.blf = BloomFilter(connection=StrictRedis(host='127.0.0.1', port=6379, db=8, password='9tBJEUr4wbnf'), bitvector_key='bloomfilter')
+        self.pq = PyQuery
+        self.db = MongoClient().blog
+        self.log = logger
 
-    def req(self, url, **kwargs):
+    def req_get(self, url, charset='utf-8', **kwargs):
         header = {'User-Agent': generate_user_agent()}
         proxy = {
-            'http': choice(self.proxy_list),
-            'https': choice(self.proxy_list)
+            'http': choice(proxy_list),
+            'https': choice(proxy_list)
         }
         try:
             r = requests.get(url, headers=header, proxies=proxy, auth=HTTPProxyAuth('reg', 'noxqofb0'), **kwargs)
-        except:
-            r = requests.get(url, headers=header, **kwargs)
-        try:
-            charset = re.search(re.compile(r'charset=(.*)'), r.headers.get('Content-Type')).group(1)
         except Exception as e:
-            # self.log.warn(url)
-            # self.log.warn(e)
-            charset = 'utf-8'
+            self.log.warn("使用代理失败,直接连接(%s)" % e)
+            r = requests.get(url, headers=header, **kwargs)
         r.encoding = charset
         return r
 
-    def repeat_check(self, source_url):
-        hashurl = self.md5_value(source_url)
-        # print("Check redis is %s" % hashurl)
-        if self.rds.exists(hashurl):
-            self.log.info('Alreay crawl %s' % source_url)
-            return True
-        else:
-            self.log.info('Start crawl %s' % source_url)
-            return False
-
-    def insert_redis(self, key, slat='repeat_check'):
-        # print('Insert in redsi is : %s' % self.md5_value(key))
-        self.rds.set(self.md5_value(key), slat)
+    def req_post(self, url, charset='utf-8', **kwargs):
+        header = {'User-Agent': generate_user_agent()}
+        proxy = {
+            'http': choice(proxy_list),
+            'https': choice(proxy_list)
+        }
+        try:
+            r = requests.post(url, headers=header, proxies=proxy, auth=HTTPProxyAuth('reg', 'noxqofb0'), **kwargs)
+        except Exception as e:
+            self.log.warn("使用代理失败,直接连接(%s)" % e)
+            r = requests.post(url, headers=header, **kwargs)
+        r.encoding = charset
+        return r
 
     @staticmethod
     def md5_value(key):
+        if isinstance(key, str):
+            key = key.encode('utf-8')
         return hashlib.md5(key).hexdigest()
 
-    @staticmethod
-    def get_img(soup, real):
+    def repeat_check(self, url):
+        if self.blf.exist(url):
+            self.log.info("ALready crawl it, %s" % url)
+            return True
+        self.log.info("Start crawl url %s" % url)
+        return False
+
+    def get_img(self, soup, real):
         img_list = soup.find_all('img')
         for img in img_list:
-            # new_tag = soup.new_tag("img")
-            # new_tag['src'] = url_for('view.get_img', url=img['data-src'])
-            # new_tag['src'] = "http://vaayne.com/img02?url=%s" % img[real]
-            # img.replace_with(new_tag)
             img['src'] = "https://vaayne.com/img02?url=%s" % img[real]
         try:
             selects = soup.find_all('select')
             for sel in selects:
                 sel.extract()
-        except:
-            pass
-        return soup
+        except Exception as e:
+            self.log.exception(e)
+        try:
+            return str(soup.find('div').encode('utf-8'), 'utf-8')
+        except AttributeError:
+            return str(soup.encode('utf-8'), 'utf-8')
 
     def add_result(self, title, post_time, source_name, source_url, aid=None, summary=None,
                    content=None, author=None, image=None, category=None, spider_name=None, content_type='html'):
@@ -85,7 +93,7 @@ class Spider(object):
         except Exception as e:
             self.log.exception(e)
             post_id = 1
-        print (post_id)
+        print(post_id)
         post = dict(
             post_id=int(post_id),
             aid=aid,
@@ -102,10 +110,11 @@ class Spider(object):
             slug=self.md5_value(source_url),
             content_type=content_type
         )
+        # print(post)
         try:
             self.db.posts.insert(post)
-            self.log.info(u"Insert %s  from %s sucess.".encode('utf-8') % (title, source_name))
-            self.insert_redis(source_url)
+            self.log.info(u"Insert %s  from %s sucess." % (title, source_name))
+            if spider_name == 'wx':
+                self.blf.add(source_url)
         except Exception as e:
-            # self.log.exception(e)
             self.log.warn(e)

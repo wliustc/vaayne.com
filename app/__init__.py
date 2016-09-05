@@ -34,42 +34,19 @@ def create_app(config_name):
 
     from .views import view
     app.register_blueprint(view)
-    from .views.api import api as api
-    app.register_blueprint(api, url_prefix='/api')
-    from .views.feed import feed
-    app.register_blueprint(feed, url_prefix='/feed')
+    # from .views.api import api as api
+    # app.register_blueprint(api, url_prefix='/api')
+    # from .views.feed import feed
+    # app.register_blueprint(feed, url_prefix='/feed')
     from .views.auth import auth
     app.register_blueprint(auth, url_prefix='/auth')
-    from .views.gzh import gzh
-    app.register_blueprint(gzh, url_prefix='/gzh')
+    # from .views.gzh import gzh
+    # app.register_blueprint(gzh, url_prefix='/gzh')
     return app
 
 
 def init_log(name, level="INFO"):
-    import logging, colorlog
-    formatter = colorlog.ColoredFormatter(
-        fmt="%(log_color)s%(asctime)s-%(name)s | %(levelname)-8s| %(message)s",
-        datefmt='%Y-%m-%d %H:%M:%S',
-        log_colors={
-            'DEBUG': 'white',
-            'INFO': 'green',
-            'WARNING': 'yellow',
-            'ERROR': 'red',
-            'CRITICAL': 'bold_red',
-        }
-    )
-    sh = logging.StreamHandler()
-    fh = logging.FileHandler(filename=name + '.log')
-    logging._defaultFormatter = formatter
+    import logging, coloredlogs
     log_ = logging.getLogger(name)
-    level_name = {
-        'debug': logging.DEBUG,
-        'info': logging.INFO,
-        'warn': logging.WARN,
-        'error': logging.ERROR,
-        'critical': logging.CRITICAL
-    }
-    log_.setLevel(level=level_name.get(level.lower()))
-    log_.addHandler(sh)
-    log_.addHandler(fh)
+    coloredlogs.install(level)
     return log_
