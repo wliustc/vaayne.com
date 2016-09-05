@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
-# Created by Vaayne at 2016/09/01 14:10 
+# Created by Vaayne at 2016/09/04 09:49 
+
 from gevent.monkey import patch_all
 patch_all()
 from gevent.pool import Pool
@@ -30,21 +31,18 @@ def get_urls():
 def main():
     path = os.path.abspath(os.getcwd())
     os.chdir(path)
+    fly.run(page=1)
+    sm.run()
     p = Pool(16)
-    if sys.argv[1] == 'wx':
-        urls = list(map(lambda x: 'http://www.iwgc.cn/list/%s' % x, [i for i in range(1, 5)]))
-        p.map(iwgc.run_, urls)
-    elif sys.argv[1] == 'fly':
-        try:
-            page = sys.argv[2]
-        except:
-            page = 1
-        fly.run(page)
-    elif sys.argv[1] == 'smzdm':
-        sm.run()
-    else:
-        print(sys.argv)
+    urls = list(map(lambda x: 'http://www.iwgc.cn/list/%s' % x, [i for i in range(1, 1001)]))
+    p.map(iwgc.run_, urls)
 
 
 if __name__ == '__main__':
-    main()
+    while 1:
+        try:
+            main()
+        except Exception as e:
+            log.exception(e)
+        finally:
+            time.sleep(60*60)
