@@ -36,8 +36,8 @@ def create_app(config_name):
     app.register_blueprint(view)
     # from .views.api import api as api
     # app.register_blueprint(api, url_prefix='/api')
-    # from .views.feed import feed
-    # app.register_blueprint(feed, url_prefix='/feed')
+    from .views.feed import feed
+    app.register_blueprint(feed, url_prefix='/feed')
     from .views.auth import auth
     app.register_blueprint(auth, url_prefix='/auth')
     # from .views.gzh import gzh

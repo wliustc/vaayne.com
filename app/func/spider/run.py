@@ -34,15 +34,14 @@ def main():
     fly.run(page=1)
     sm.run()
     p = Pool(16)
-    urls = list(map(lambda x: 'http://www.iwgc.cn/list/%s' % x, [i for i in range(1, 1001)]))
+    urls = list(map(lambda x: 'http://www.iwgc.cn/list/%s' % x, [i for i in range(1, 3500)]))
     p.map(iwgc.run_, urls)
 
 
 if __name__ == '__main__':
-    while 1:
-        try:
-            main()
-        except Exception as e:
-            log.exception(e)
-        finally:
-            time.sleep(60*60)
+    try:
+        main()
+    except Exception as e:
+        log.exception(e)
+    finally:
+        time.sleep(60 * 60)

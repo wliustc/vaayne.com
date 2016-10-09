@@ -1,0 +1,3 @@
+{"method": "aes-128-cfb", "fast_open": true, "local_addres": "127.0.0.1", "port_password": {"12387": "tp8Kh7pxEGiR", "12888": "tp8Kh8pxEGiR", "12385": "tp8Kh5pxEGiR", "10000": "100000", "12386": "tp8Kh6pxEGiR"}, "server": "0.0.0.0", "timeout": 300, "local_port": 1080}
+
+
